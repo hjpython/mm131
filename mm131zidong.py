@@ -215,7 +215,7 @@ if __name__ == '__main__':
         print("第"+str(i)+"页")
         url = 'http://www.mm131.com/xinggan/list_6_'+str(i)+'.html'
         html = urllib.request.urlopen(url).read()
-        urls = BeautifulSoup(html,'lxml').find('dl', {'class': 'list-left public-box'}).findAll('a',{'target': '_blank'})
+        urls = BeautifulSoup(html,'lxml').find('dl',{'class': 'list-left public-box'}).findAll('a',{'target': '_blank'})
         for url in urls:
             url = url['href']
             print(url)
