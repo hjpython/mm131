@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 import os
 import shutil
 import urllib.error
-import pymysql
 import re
+from factor import *
 def xiazai_mm131(url):
     html = urllib.request.urlopen(url)
     title = BeautifulSoup(html, 'lxml').find("title").get_text()
@@ -25,15 +25,7 @@ def xiazai_mm131(url):
     try:
         html = urllib.request.urlopen(urllib.request.Request(url))
         picurl = BeautifulSoup(html, 'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
-        req = urllib.request.Request(picurl)
-        req.add_header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-        req.add_header("Accept-Encoding","gzip,deflate")
-        req.add_header("Accept-Language","zh-CN,zh;q=0.9")
-        req.add_header("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.25 Safari/537.36")
-        req.add_header("Cookie","bdshare_firstime=1514538484412; UM_distinctid=160a187435124-03f316a3ae33c8-5d4e231d-144000-160a1874352a87; CNZZDATA3866066=cnzz_eid%3D935699110-1494676185-https%253A%252F%252Fwww.baidu.com%252F%26ntime%3D1494676185; Hm_lvt_9a737a8572f89206db6e9c301695b55a=1514538490,1514565948; Hm_lpvt_9a737a8572f89206db6e9c301695b55a=1514567510")
-        req.add_header("Referer","http://www.mm131.com/xinggan/3561.html")
-        req.add_header("Connection","keep-alive")
-        req.add_header("Host","img1.mm131.me")
+        req(picurl)
         img = urllib.request.urlopen(req).read()
         f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + "1.jpg", "wb")
         f.write(img)
@@ -41,23 +33,11 @@ def xiazai_mm131(url):
     except urllib.error.URLError as e:
         if hasattr(e, "code"):
             print(e.code)
-            conn = pymysql.connect(host='127.0.0.1', user='root', passwd='123456', db='mypydb', charset='utf8')
-            cur = conn.cursor()
-            sql = ("insert into mm131(url)" "values(%s)")
-            cur.execute(sql, url)
-            conn.commit()
-            cur.close()
-            conn.close()
+            sql(url)
             print('未下载网址已存入数据库')
         if hasattr(e, "reason"):
             print(e.reason)
-            conn = pymysql.connect(host='127.0.0.1', user='root', passwd='123456', db='mypydb', charset='utf8')
-            cur = conn.cursor()
-            sql = ("insert into mm131(url)" "values(%s)")
-            cur.execute(sql, url)
-            conn.commit()
-            cur.close()
-            conn.close()
+            sql(url)
             print('未下载网址已存入数据库')
     finally:
         pass
@@ -68,15 +48,7 @@ def xiazai_mm131(url):
             url1 = url0 + '_' + str(i) + '.html'
             html = urllib.request.urlopen(urllib.request.Request(url1))
             picurl = BeautifulSoup(html, 'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
-            req = urllib.request.Request(picurl)
-            req.add_header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-            req.add_header("Accept-Encoding","gzip,deflate")
-            req.add_header("Accept-Language","zh-CN,zh;q=0.9")
-            req.add_header("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.25 Safari/537.36")
-            req.add_header("Cookie","bdshare_firstime=1514538484412; UM_distinctid=160a187435124-03f316a3ae33c8-5d4e231d-144000-160a1874352a87; CNZZDATA3866066=cnzz_eid%3D935699110-1494676185-https%253A%252F%252Fwww.baidu.com%252F%26ntime%3D1494676185; Hm_lvt_9a737a8572f89206db6e9c301695b55a=1514538490,1514565948; Hm_lpvt_9a737a8572f89206db6e9c301695b55a=1514567510")
-            req.add_header("Referer","http://www.mm131.com/xinggan/3561.html")
-            req.add_header("Connection","keep-alive")
-            req.add_header("Host","img1.mm131.me")
+            req(picurl)
             img = urllib.request.urlopen(req).read()
             f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + str(i) + ".jpg", "wb")
             f.write(img)
@@ -84,23 +56,11 @@ def xiazai_mm131(url):
         except urllib.error.URLError as e:
             if hasattr(e,"code"):
                 print(e.code)
-                conn = pymysql.connect(host='127.0.0.1',user='root',passwd='123456',db='mypydb',charset='utf8')
-                cur = conn.cursor()                                                                             
-                sql = ("insert into mm131(url)" "values(%s)")
-                cur.execute(sql,url)
-                conn.commit()      
-                cur.close()        
-                conn.close() 
+                sql(url)
                 print('未下载网址已存入数据库')
             if hasattr(e,"reason"):
                 print(e.reason)
-                conn = pymysql.connect(host='127.0.0.1',user='root',passwd='123456',db='mypydb',charset='utf8')
-                cur = conn.cursor()                                                                             
-                sql = ("insert into mm131(url)" "values(%s)")
-                cur.execute(sql,url)
-                conn.commit()      
-                cur.close()        
-                conn.close()
+                sql(url)
                 print('未下载网址已存入数据库')
         finally:
             pass
@@ -123,15 +83,7 @@ def xiazai_mm131_sql(url):
     try:
         html = urllib.request.urlopen(urllib.request.Request(url))
         picurl = BeautifulSoup(html,'lxml').find("div",{"class": "content-pic"}).find("img")["src"]
-        req = urllib.request.Request(picurl)
-        req.add_header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-        req.add_header("Accept-Encoding","gzip,deflate")
-        req.add_header("Accept-Language","zh-CN,zh;q=0.9")
-        req.add_header("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.25 Safari/537.36")
-        req.add_header("Cookie","bdshare_firstime=1514538484412; UM_distinctid=160a187435124-03f316a3ae33c8-5d4e231d-144000-160a1874352a87; CNZZDATA3866066=cnzz_eid%3D935699110-1494676185-https%253A%252F%252Fwww.baidu.com%252F%26ntime%3D1494676185; Hm_lvt_9a737a8572f89206db6e9c301695b55a=1514538490,1514565948; Hm_lpvt_9a737a8572f89206db6e9c301695b55a=1514567510")
-        req.add_header("Referer","http://www.mm131.com/xinggan/3561.html")
-        req.add_header("Connection","keep-alive")
-        req.add_header("Host","img1.mm131.me")
+        req(picurl)
         img = urllib.request.urlopen(req).read()
         f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + "1.jpg", "wb")
         f.write(img)
@@ -139,23 +91,11 @@ def xiazai_mm131_sql(url):
     except urllib.error.URLError as e:
         if hasattr(e,"code"):
             print(e.code)
-            conn = pymysql.connect(host='127.0.0.1', user='root', passwd='123456', db='mypydb', charset='utf8')
-            cur = conn.cursor()
-            sql = ("insert into mm131m(url)" "values(%s)")
-            cur.execute(sql, url)
-            conn.commit()
-            cur.close()
-            conn.close()
+            sql(url)
             print('未下载网址已存入数据库')
         if hasattr(e,"reason"):
             print(e.reason)
-            conn = pymysql.connect(host='127.0.0.1', user='root', passwd='123456', db='mypydb', charset='utf8')
-            cur = conn.cursor()
-            sql = ("insert into mm131m(url)" "values(%s)")
-            cur.execute(sql, url)
-            conn.commit()
-            cur.close()
-            conn.close()
+            sql(url)
             print('未下载网址已存入数据库')
     finally:
         pass
@@ -166,15 +106,7 @@ def xiazai_mm131_sql(url):
             url1 = url0 + '_' + str(i) + '.html'
             html = urllib.request.urlopen(urllib.request.Request(url1))
             picurl = BeautifulSoup(html,'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
-            req = urllib.request.Request(picurl)
-            req.add_header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-            req.add_header("Accept-Encoding","gzip,deflate")
-            req.add_header("Accept-Language","zh-CN,zh;q=0.9")
-            req.add_header("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.25 Safari/537.36")
-            req.add_header("Cookie","bdshare_firstime=1514538484412; UM_distinctid=160a187435124-03f316a3ae33c8-5d4e231d-144000-160a1874352a87; CNZZDATA3866066=cnzz_eid%3D935699110-1494676185-https%253A%252F%252Fwww.baidu.com%252F%26ntime%3D1494676185; Hm_lvt_9a737a8572f89206db6e9c301695b55a=1514538490,1514565948; Hm_lpvt_9a737a8572f89206db6e9c301695b55a=1514567510")
-            req.add_header("Referer","http://www.mm131.com/xinggan/3561.html")
-            req.add_header("Connection","keep-alive")
-            req.add_header("Host","img1.mm131.me")
+            req(picurl)
             img = urllib.request.urlopen(req).read()
             f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + str(i) + ".jpg", "wb")
             f.write(img)
@@ -182,23 +114,11 @@ def xiazai_mm131_sql(url):
         except urllib.error.URLError as e:
             if hasattr(e,"code"):
                 print(e.code)
-                conn = pymysql.connect(host='127.0.0.1',user='root',passwd='123456',db='mypydb',charset='utf8')
-                cur = conn.cursor()
-                sql = ("insert into mm131m(url)" "values(%s)")
-                cur.execute(sql,url)
-                conn.commit()
-                cur.close()
-                conn.close()
+                sql(url)
                 print('未下载网址已存入数据库')
             if hasattr(e,"reason"):
                 print(e.reason)
-                conn = pymysql.connect(host='127.0.0.1',user='root',passwd='123456',db='mypydb',charset='utf8')
-                cur = conn.cursor()
-                sql = ("insert into mm131m(url)" "values(%s)")
-                cur.execute(sql,url)
-                conn.commit()
-                cur.close()
-                conn.close()
+                sql(url)
                 print('未下载网址已存入数据库')
         finally:
             pass
@@ -211,7 +131,7 @@ if __name__ == '__main__':
         url = url['href']
         print(url)
         xiazai_mm131(url)
-    for i in range(4,122):
+    for i in range(2,130):
         print("第"+str(i)+"页")
         url = 'http://www.mm131.com/xinggan/list_6_'+str(i)+'.html'
         html = urllib.request.urlopen(url).read()
