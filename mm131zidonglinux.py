@@ -42,7 +42,7 @@ def xiazai_mm131(url):
         except:
             html = html.decode('gb2312','ignore')
             picurl = BeautifulSoup(html,'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
-        req(picurl)
+        req = req_add(picurl)
         img = urllib.request.urlopen(req).read()
         f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + "1.jpg", "wb")
         f.write(img)
@@ -70,7 +70,7 @@ def xiazai_mm131(url):
             except:
                 html = html.decode('gb2312','ignore')
                 picurl = BeautifulSoup(html,'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
-            req(picurl)
+            req = req_add(picurl)
             img = urllib.request.urlopen(req).read()
             f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + str(i) + ".jpg", "wb")
             f.write(img)
@@ -121,7 +121,7 @@ def xiazai_mm131_sql(url):
         except:
             html = html.decode('gb2312','ignore')
             picurl = BeautifulSoup(html,'lxml').find("div",{"class": "content-pic"}).find("img")["src"]
-        req(picurl)
+        req = req_add(picurl)
         img = urllib.request.urlopen(req).read()
         f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + "1.jpg", "wb")
         f.write(img)
@@ -149,7 +149,7 @@ def xiazai_mm131_sql(url):
             except:
                 html = html.decode('gb2312','ignore')
                 picurl = BeautifulSoup(html,'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
-            req(picurl)
+            req = req_add(picurl)
             img = urllib.request.urlopen(req).read()
             f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + str(i) + ".jpg", "wb")
             f.write(img)

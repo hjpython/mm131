@@ -1,7 +1,7 @@
 import urllib.request
 import pymysql
 
-def req(picurl):
+def req_add(picurl):
     req = urllib.request.Request(picurl)
     req.add_header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
     req.add_header("Accept-Encoding", "gzip,deflate")
