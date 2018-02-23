@@ -181,7 +181,7 @@ if __name__ == '__main__':
         url = url['href']
         print(url)
         xiazai_mm131(url)
-    #以下下载第2页到129页的图片
+    #下载第2页到129页的图片
     for i in range(2,130):
         print("第"+str(i)+"页")
         url = 'http://www.mm131.com/xinggan/list_6_'+str(i)+'.html'
