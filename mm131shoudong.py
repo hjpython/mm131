@@ -6,6 +6,7 @@ import os
 import urllib.error
 import shutil
 import re
+import gzip
 
 def xiazai_mm131(url):
     try:

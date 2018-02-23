@@ -17,6 +17,7 @@ def check_img_num():
 
 def check_num():
     '''核对文件夹中图片数量,并把数量不符的文件夹名打印出来'''
+    i = 0
     my_dir0 = 'D:\\temp\\pic\\mm131'
     my_dirs = glob(os.path.join(my_dir0,'*'))
     print(len(my_dirs))            #文件夹总数
@@ -31,9 +32,12 @@ def check_num():
             page = int(my_dir2)
         if page != len(glob(os.path.join(my_dir,'*'))):
             print(my_dir)
+            i += 1
+    print(i)
 
 def del_files():
     '''删除图片数量不够的文件夹'''
+    i = 0
     my_dir0 = 'D:\\temp\\pic\\mm131'
     my_dirs = glob(os.path.join(my_dir0, '*'))
     for my_dir in my_dirs:
