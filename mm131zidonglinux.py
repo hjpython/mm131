@@ -8,6 +8,7 @@ import urllib.error
 import re
 import gzip
 from factor import *
+
 def xiazai_mm131(url):
     try:
         html = urllib.request.urlopen(url).read()
