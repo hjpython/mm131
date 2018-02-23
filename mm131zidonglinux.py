@@ -86,6 +86,7 @@ def xiazai_mm131(url):
                 print('未下载网址已存入数据库')
         finally:
             pass
+
 def xiazai_mm131_sql(url):
     try:
         html = urllib.request.urlopen(url).read()
