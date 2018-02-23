@@ -168,6 +168,7 @@ def xiazai_mm131_sql(url):
 
 
 if __name__ == '__main__':
+    #下载第1页的图片
     url = 'http://www.mm131.com/xinggan/'
     html = urllib.request.urlopen(url).read()
     try:
@@ -182,7 +183,7 @@ if __name__ == '__main__':
         print(url)
         xiazai_mm131(url)
     #下载第2页到129页的图片
-    for i in range(2,130):
+    for i in range(129,130):
         print("第"+str(i)+"页")
         url = 'http://www.mm131.com/xinggan/list_6_'+str(i)+'.html'
         html = urllib.request.urlopen(url).read()
