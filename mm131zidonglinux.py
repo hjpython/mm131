@@ -165,6 +165,8 @@ def xiazai_mm131_sql(url):
                 print('未下载网址已存入数据库')
         finally:
             pass
+
+
 if __name__ == '__main__':
     url = 'http://www.mm131.com/xinggan/'
     html = urllib.request.urlopen(url).read()
