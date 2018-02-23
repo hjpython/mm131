@@ -33,7 +33,7 @@ def check_num():
         if page != len(glob(os.path.join(my_dir,'*'))):
             print(my_dir1,'---少',page-len(glob(os.path.join(my_dir,'*'))),'页')
             i += 1
-    print('共有',i,'个文件夹少图片')
+    print('共有以上',i,'个文件夹少图片')
 
 def del_files():
     '''删除图片数量不够的文件夹'''
