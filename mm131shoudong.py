@@ -94,5 +94,5 @@ def xiazai_mm131(url):
 
 if __name__ == '__main__':
     while True:
-        url = input("请输入网址:")
+        url = input("请输入网址: ")
         xiazai_mm131(url)
