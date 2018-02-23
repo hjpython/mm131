@@ -31,7 +31,7 @@ def check_num():
             my_dir2 = my_dir2[-1]
             page = int(my_dir2)
         if page != len(glob(os.path.join(my_dir,'*'))):
-            print(my_dir1,'---少',page-len(glob(os.path.join(my_dir,'*'))),'页')
+            print(my_dir1,'---少',page-len(glob(os.path.join(my_dir,'*'))),'张')
             i += 1
     print('共有以上',i,'个文件夹少图片')
 
