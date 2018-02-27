@@ -68,4 +68,5 @@ if __name__ == '__main__':
             pass
     p.close()
     p.join()
+    print('\n')
     print('恭喜您，已全部下载完毕')
