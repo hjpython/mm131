@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # coding=utf-8
 from factor import *
+from multiprocessing import Pool
 
 if __name__ == '__main__':
     #下载第1页的图片
+    p = Pool(50)
     url = 'http://www.mm131.com/xinggan/'
     html = urllib.request.urlopen(url).read()
     try:
@@ -16,7 +18,7 @@ if __name__ == '__main__':
     for url in urls:
         url = url['href']
         print(url)
-        xiazai_mm131(url)
+        p.apply_async(xiazai_mm131, args=(url,))
 
     #下载第2页到129页的图片
     for i in range(2,130):
@@ -32,7 +34,7 @@ if __name__ == '__main__':
         for url in urls:
             url = url['href']
             print(url)
-            xiazai_mm131(url)
+            p.apply_async(xiazai_mm131, args=(url,))
 
     #下载数据库中图片
     urls = []
@@ -49,7 +51,7 @@ if __name__ == '__main__':
     while urls:
         url = urls.pop()
         print("重新下载:%s"%url)
-        xiazai_mm131_sql(url)
+        p.apply_async(xiazai_mm131_sql, args=(url,))
         try:
             conn = pymysql.connect(**kw)
             cur = conn.cursor()
@@ -64,3 +66,6 @@ if __name__ == '__main__':
             urls = list(set(urls))
         except:
             pass
+    p.close()
+    p.join()
+    print('恭喜您，已全部下载完毕')
