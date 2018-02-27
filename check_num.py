@@ -53,3 +53,4 @@ if __name__ == '__main__':
     check_img_num()
     print('\n')
     check_num()
+    #del_files()
