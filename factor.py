@@ -6,6 +6,7 @@ import urllib.error
 import re
 from bs4 import BeautifulSoup
 import gzip
+from config import dir,kw
 
 def req_add(picurl):
     req = urllib.request.Request(picurl)
@@ -22,7 +23,7 @@ def req_add(picurl):
     return req
 
 def sql(url):
-    conn = pymysql.connect(host='127.0.0.1', user='root', passwd='123456', db='mypydb', charset='utf8')
+    conn = pymysql.connect(**kw)
     cur = conn.cursor()
     sql = ("insert into mm131(url)" "values(%s)")
     cur.execute(sql, url)
@@ -52,7 +53,7 @@ def xiazai_mm131(url):
             page = BeautifulSoup(html,'lxml').find("span", {"class":"page-ch"}).get_text()
         pattern = re.compile('\d*')
         page = pattern.findall(page)[1]
-        os.makedirs("D:\\temp\\pic\\mm131\\" + title + page)
+        os.makedirs(dir + title + page)
     except:
         return
     try:
@@ -65,7 +66,7 @@ def xiazai_mm131(url):
             picurl = BeautifulSoup(html,'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
         req = req_add(picurl)
         img = urllib.request.urlopen(req).read()
-        f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + "1.jpg", "wb")
+        f = open(dir + title + page + "\\" + "1.jpg", "wb")
         f.write(img)
         f.close()
     except urllib.error.URLError as e:
@@ -93,7 +94,7 @@ def xiazai_mm131(url):
                 picurl = BeautifulSoup(html,'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
             req = req_add(picurl)
             img = urllib.request.urlopen(req).read()
-            f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + str(i) + ".jpg", "wb")
+            f = open(dir + title + page + "\\" + str(i) + ".jpg", "wb")
             f.write(img)
             f.close()
         except urllib.error.URLError as e:
@@ -130,10 +131,10 @@ def xiazai_mm131_sql(url):
             page = BeautifulSoup(html, 'lxml').find("span", {"class": "page-ch"}).get_text()
         pattern = re.compile('\d*')
         page = pattern.findall(page)[1]
-        os.makedirs("D:\\temp\\pic\\mm131\\" + title + page)
+        os.makedirs(dir + title + page)
     except:
-        shutil.rmtree("D:\\temp\\pic\\mm131\\" + title + page)
-        os.makedirs("D:\\temp\\pic\\mm131\\" + title + page)
+        shutil.rmtree(dir + title + page)
+        os.makedirs(dir + title + page)
     try:
         html = urllib.request.urlopen(url).read()
         try:
@@ -144,7 +145,7 @@ def xiazai_mm131_sql(url):
             picurl = BeautifulSoup(html,'lxml').find("div",{"class": "content-pic"}).find("img")["src"]
         req = req_add(picurl)
         img = urllib.request.urlopen(req).read()
-        f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + "1.jpg", "wb")
+        f = open(dir + title + page + "\\" + "1.jpg", "wb")
         f.write(img)
         f.close()
     except urllib.error.URLError as e:
@@ -172,7 +173,7 @@ def xiazai_mm131_sql(url):
                 picurl = BeautifulSoup(html,'lxml').find("div", {"class": "content-pic"}).find("img")["src"]
             req = req_add(picurl)
             img = urllib.request.urlopen(req).read()
-            f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + str(i) + ".jpg", "wb")
+            f = open(dir + title + page + "\\" + str(i) + ".jpg", "wb")
             f.write(img)
             f.close()
         except urllib.error.URLError as e:

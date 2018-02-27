@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     #下载数据库中图片
     urls = []
-    conn = pymysql.connect(host='192.168.1.6',user='root',passwd='123456',db='mypydb',charset='utf8')
+    conn = pymysql.connect(**kw)
     cur = conn.cursor()
     cur.execute("select url from mm131")
     results = cur.fetchall()
@@ -51,7 +51,7 @@ if __name__ == '__main__':
         print("重新下载:%s"%url)
         xiazai_mm131_sql(url)
         try:
-            conn = pymysql.connect(host='192.168.1.6',user='root',passwd='123456',db='mypydb',charset='utf8')
+            conn = pymysql.connect(**kw)
             cur = conn.cursor()
             cur.execute("select url from mm131m")
             results = cur.fetchall()

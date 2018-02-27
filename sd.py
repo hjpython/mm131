@@ -7,6 +7,7 @@ import urllib.error
 import shutil
 import re
 import gzip
+from config import dir
 
 def xiazai_mm131(url):
     try:
@@ -30,10 +31,10 @@ def xiazai_mm131(url):
             page = BeautifulSoup(html,'lxml').find("span", {"class":"page-ch"}).get_text()
         pattern = re.compile('\d*')
         page = pattern.findall(page)[1]
-        os.makedirs("D:\\temp\\pic\\mm131\\" + title + page)
+        os.makedirs(dir + title + page)
     except:
-        shutil.rmtree("D:\\temp\\pic\\mm131\\" + title + page)
-        os.makedirs("D:\\temp\\pic\\mm131\\" + title + page)
+        shutil.rmtree(dir + title + page)
+        os.makedirs(dir + title + page)
     try:
         html = urllib.request.urlopen(url).read()
         try:
@@ -53,7 +54,7 @@ def xiazai_mm131(url):
         req.add_header("Connection","keep-alive")
         req.add_header("Host","img1.mm131.me")
         img = urllib.request.urlopen(req).read()
-        f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + "1.jpg", "wb")
+        f = open(dir + title + page + "\\" + "1.jpg", "wb")
         f.write(img)
         f.close()
     except urllib.error.URLError as e:
@@ -84,7 +85,7 @@ def xiazai_mm131(url):
             req.add_header("Connection","keep-alive")
             req.add_header("Host","img1.mm131.me")
             img = urllib.request.urlopen(req).read()
-            f = open("D:\\temp\\pic\\mm131\\" + title + page + "\\" + str(i) + ".jpg", "wb")
+            f = open(dir + title + page + "\\" + str(i) + ".jpg", "wb")
             f.write(img)
             f.close()
         except urllib.error.URLError as e:

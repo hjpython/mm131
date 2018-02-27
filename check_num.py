@@ -1,8 +1,7 @@
 from glob import glob
 import os
 import shutil
-
-my_dir0 = 'D:\\temp\\pic\\mm131'
+from config import my_dir0
 
 def check_img_num():
     '''检查文件夹中图片数量是否大于90'''
