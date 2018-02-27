@@ -31,6 +31,15 @@ def sql(url):
     cur.close()
     conn.close()
 
+def sqll(url):
+    conn = pymysql.connect(**kw)
+    cur = conn.cursor()
+    sql = ("insert into mm131m(url)" "values(%s)")
+    cur.execute(sql, url)
+    conn.commit()
+    cur.close()
+    conn.close()
+
 def xiazai_mm131(url):
     try:
         html = urllib.request.urlopen(url).read()
@@ -151,11 +160,11 @@ def xiazai_mm131_sql(url):
     except urllib.error.URLError as e:
         if hasattr(e,"code"):
             print(e.code)
-            sql(url)
+            sqll(url)
             print('未下载网址已存入数据库')
         if hasattr(e,"reason"):
             print(e.reason)
-            sql(url)
+            sqll(url)
             print('未下载网址已存入数据库')
     finally:
         pass
@@ -179,11 +188,11 @@ def xiazai_mm131_sql(url):
         except urllib.error.URLError as e:
             if hasattr(e,"code"):
                 print(e.code)
-                sql(url)
+                sqll(url)
                 print('未下载网址已存入数据库')
             if hasattr(e,"reason"):
                 print(e.reason)
-                sql(url)
+                sqll(url)
                 print('未下载网址已存入数据库')
         finally:
             pass
