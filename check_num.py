@@ -51,4 +51,5 @@ def del_files():
             shutil.rmtree(os.path.join(my_dir))
 
 if __name__ == '__main__':
+    check_img_num()
     check_num()
