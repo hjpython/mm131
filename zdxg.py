@@ -51,7 +51,7 @@ if __name__ == '__main__':
     while urls:
         url = urls.pop()
         print("重新下载:%s"%url)
-        p.apply_async(xiazai_mm131_sql, args=(url,))
+        xiazai_mm131_sql(url)
         try:
             conn = pymysql.connect(**kw)
             cur = conn.cursor()
