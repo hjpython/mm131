@@ -17,6 +17,7 @@ if __name__ == '__main__':
         url = url['href']
         print(url)
         xiazai_mm131(url)
+
     #下载第2页到129页的图片
     for i in range(2,130):
         print("第"+str(i)+"页")
@@ -32,6 +33,7 @@ if __name__ == '__main__':
             url = url['href']
             print(url)
             xiazai_mm131(url)
+
     #下载数据库中图片
     urls = []
     conn = pymysql.connect(host='192.168.1.6',user='root',passwd='123456',db='mypydb',charset='utf8')
